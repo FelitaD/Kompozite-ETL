@@ -11,7 +11,7 @@ Formatting is made with pandas as well.
 We want to match the format before it is inserted in the database.
 
 ## Load
-Required fields are checked in the load stage by the database constraint.
+Required fields + types are checked in the load stage by the database constraints.
 
 # Usage
 

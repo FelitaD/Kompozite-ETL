@@ -1,8 +1,13 @@
 import argparse
+import pandas as pd
 
 from config import logger
 from processor.extractor.extractor import Extractor
 from processor.transformer.transformer import Transformer
+
+
+pd.set_option('display.max_columns', None)
+pd.set_option('display.width', None)
 
 
 def parse_arguments():
