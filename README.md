@@ -27,4 +27,5 @@ pytest
 
 # Issues encountered
 
-In `test_keep_unique_codename`: having inplace=True modified the original fixture even when copied.
+- In `test_keep_unique_codename`: having inplace=True modified the original fixture even when copied.
+- List of strings in SQLite -> replaced with PickleType

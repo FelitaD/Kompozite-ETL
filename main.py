@@ -4,6 +4,7 @@ import pandas as pd
 from config import logger
 from processor.extractor.extractor import Extractor
 from processor.transformer.transformer import Transformer
+from processor.loader.loader import Loader
 
 
 pd.set_option('display.max_columns', None)
@@ -25,7 +26,14 @@ def main(args):
     logger.info('-------------- Transforming data --------------------')
     transformer = Transformer(original_meshes)
     transformer.transform()
-    print('Transformed meshes:\n', transformer.meshes)
+    transformed_meshes = transformer.meshes
+    print('Transformed meshes:\n', transformed_meshes)
+
+    logger.info('-------------- Loading data --------------------')
+    loader = Loader()
+    loader.load(transformed_meshes)
+    data = loader.query()
+    print(data)
 
 
 if __name__ == '__main__':
