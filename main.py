@@ -2,6 +2,7 @@ import argparse
 
 from config import logger
 from processor.extractor.extractor import Extractor
+from processor.transformer.transformer import Transformer
 
 
 def parse_arguments():
@@ -12,10 +13,13 @@ def parse_arguments():
 
 def main(args):
     logger.info('-------------- Extracting data --------------------')
-
     csv_file = args.csv_file
     original_meshes = Extractor(csv_file).extract()
     print(original_meshes)
+
+    logger.info('-------------- Transforming data --------------------')
+    transformed_meshes = Transformer(original_meshes).transform()
+    print(transformed_meshes)
 
 
 if __name__ == '__main__':

@@ -8,4 +8,5 @@ class Extractor:
         self.csv_file = csv_file
 
     def extract(self):
+        """Extract csv file with ; delimiter."""
         return pd.read_csv(self.csv_file, delimiter=';')
