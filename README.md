@@ -1,5 +1,18 @@
 # Kompozite technical test - Partie 1: Ingestion and validation de la donneée
 
+# ETL Process
+
+## Extract
+The input csv file is passed as an argument to the script.
+It results a pandas dataframe.
+
+## Transform
+Formatting is made with pandas as well. 
+We want to match the format before it is inserted in the database.
+
+## Load
+Required fields are checked in the load stage by the database constraint.
+
 # Usage
 
 ```commandline

@@ -15,11 +15,12 @@ def main(args):
     logger.info('-------------- Extracting data --------------------')
     csv_file = args.csv_file
     original_meshes = Extractor(csv_file).extract()
-    print(original_meshes)
+    print('Original meshes:\n', original_meshes)
 
     logger.info('-------------- Transforming data --------------------')
-    transformed_meshes = Transformer(original_meshes).transform()
-    print(transformed_meshes)
+    transformer = Transformer(original_meshes)
+    transformer.transform()
+    print('Transformed meshes:\n', transformer.meshes)
 
 
 if __name__ == '__main__':
