@@ -18,7 +18,10 @@ class Transformer:
     ]
 
     TRAME_ALLOWED_VALUES = ["T2 Ra1 M2 E2", "T2 Ra1 M4 E2", "T2 Ra1 M4 E3"]
-    
+
+    COLOR_NAMES_ALLOWED_VALUES = ['white', 'yellow', 'green', 'purple', 'red', 'blue', 'orange', 'magenta', 'dark',
+                                  'grey', 'cyan']
+
     def __init__(self, original_meshes):
         self.meshes = original_meshes
 
@@ -30,6 +33,7 @@ class Transformer:
         self.meshes = self.filter_trame(self.meshes)
         self.meshes = self.filter_positive(self.meshes)
         self.meshes[Fields.is_compat_interior_wall] = self.meshes[Fields.is_compat_interior_wall].apply(self.replace_bool)
+        self.meshes = self.meshes[self.meshes.color_names.apply(self.check_allowed_values)]
 
     @staticmethod
     def keep_unique_codename(meshes):
@@ -43,13 +47,25 @@ class Transformer:
 
     @staticmethod
     def filter_positive(meshes):
+        """Filter rows where mass_surf, mesh_height and mesh_width are positive."""
         return meshes.loc[(meshes[Fields.mass_surf] > 0) & (meshes[Fields.mesh_height] > 0) & (meshes[Fields.mesh_width] > 0)]
 
     @staticmethod
     def replace_bool(value):
+        """Replace boolean values by Python boolean values."""
         if value in ['FAUX', 'FALSE', '0']:
             return False
         elif value in ['VRAI', 'TRUE', '1']:
             return True
         else:
             return value
+
+    @staticmethod
+    def check_allowed_values(string):
+        """Check if the string contains only allowed values."""
+        colors = [color.strip() for color in string.split(',')]
+        for color in colors:
+            if color.lower() not in Transformer.COLOR_NAMES_ALLOWED_VALUES:
+                return False
+        return True
+    

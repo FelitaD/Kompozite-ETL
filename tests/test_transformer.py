@@ -35,3 +35,8 @@ class TestTransformer:
         assert Transformer.replace_bool('TRUE') is True
         assert Transformer.replace_bool('0') is False
         assert Transformer.replace_bool('1') is True
+
+    def test_check_allowed_values(self, meshes_test):
+        actual = meshes_test[meshes_test.color_names.apply(Transformer.check_allowed_values)]
+        expected = meshes_test.loc[[0, 1, 4, 5, 6, 7, 8]]
+        assert_frame_equal(actual, expected)
