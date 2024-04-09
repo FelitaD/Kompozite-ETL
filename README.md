@@ -15,6 +15,14 @@ Required fields + types are checked in the load stage by the database constraint
 
 # Usage
 
+Activate venv and install requirements:
+```commandline
+virtualenv venv
+source venv/bin/activate
+pip install -r requirements.txt
+```
+
+Run the script with the path to the csv file:
 ```commandline
 python3 main.py -f "data/dummy_meshes_with_errors.csv"
 python3 main.py -f "data/dummy_meshes_correct.csv"
