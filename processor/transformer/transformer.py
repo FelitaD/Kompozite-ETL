@@ -33,7 +33,9 @@ class Transformer:
         self.meshes = self.filter_trame(self.meshes)
         self.meshes = self.filter_positive(self.meshes)
         self.meshes[Fields.is_compat_interior_wall] = self.meshes[Fields.is_compat_interior_wall].apply(self.replace_bool)
+        self.meshes[Fields.roll_pallet] = self.meshes[Fields.roll_pallet].apply(self.replace_negative_roll_pallet)
         self.meshes = self.meshes[self.meshes.color_names.apply(self.check_allowed_values)]
+        self.meshes = self.meshes.reset_index(drop=True)
 
     @staticmethod
     def keep_unique_codename(meshes):
@@ -53,12 +55,19 @@ class Transformer:
     @staticmethod
     def replace_bool(value):
         """Replace boolean values by Python boolean values."""
-        if value in ['FAUX', 'FALSE', '0']:
+        if value in ['FAUX', 'FALSE', 'false', '0']:
             return False
-        elif value in ['VRAI', 'TRUE', '1']:
+        elif value in ['VRAI', 'TRUE', 'true', '1']:
             return True
         else:
             return value
+
+    @staticmethod
+    def replace_negative_roll_pallet(value):
+        """Replace negative values by NA"""
+        if value < 0:
+            return None
+        return value
 
     @staticmethod
     def check_allowed_values(string):

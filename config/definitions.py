@@ -1,5 +1,5 @@
-
 DB_STRING = 'sqlite:///meshes.db'
+
 
 class Fields:
     codename = 'codename'

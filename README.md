@@ -17,6 +17,7 @@ Required fields + types are checked in the load stage by the database constraint
 
 ```commandline
 python3 main.py -f "data/dummy_meshes_with_errors.csv"
+python3 main.py -f "data/dummy_meshes_correct.csv"
 ```
 
 # Tests
@@ -29,3 +30,11 @@ pytest
 
 - In `test_keep_unique_codename`: having inplace=True modified the original fixture even when copied.
 - List of strings in SQLite -> replaced with PickleType
+- SQLite: I usually use Postgres but tried SQLite to not use a server. The issue was querying SQLite that I solved when replacing pd.to_sql with a more controlled insertion.
+- Decoding `roll_pallet` read from SQLite: element returned is b'\x1e\x00\x00\x00\x00\x00\x00\x00'. L'erreur vient de `roll_pallet` qui a une valeur négative, créé une fonction dans Transformer pour y remédier.
+
+# Improvements
+
+- Prendre en compte tous les cas d'usage lorsqu'il y a plus de données: prendre en main les NA et mauvaises entrées pour chaque colonne...
+- Utiliser Docker pour rendre le projet plus reproductible
+- Tester Loader
